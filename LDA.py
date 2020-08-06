@@ -1,13 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy import sparse as sps
-import nltk
-import pickle
-import operator
-from itertools import chain
-import ast
-import gzip
-import gensim
+
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import RegexpTokenizer
@@ -15,17 +8,14 @@ ps = PorterStemmer()
 tokenizer = RegexpTokenizer(r'\w+')
 from scipy import sparse
 from sklearn.preprocessing import normalize
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
 import logging
-from gensim import corpora
+from scipy.stats import entropy
+from sklearn.feature_extraction.text import CountVectorizer
 from lenskit import util
 from sklearn.decomposition import LatentDirichletAllocation
 logging.basicConfig(filename='LDA.log',filemode='a',level=logging.INFO)
 _logger = logging.getLogger(__name__)
-from scipy.stats import entropy
-from sklearn.feature_extraction.text import CountVectorizer
+
 
 class ReviewLDAKL:
     
@@ -115,7 +105,6 @@ class ReviewLDAKL:
     
         return item_sim
        
-        
 
     def fit(self, pruned_data):
         
@@ -125,11 +114,8 @@ class ReviewLDAKL:
         
         item_rev = pd.DataFrame({'review': only_rev.groupby(['item']).review.apply(lambda x:' '.join(x))})
         item_rev.reset_index(inplace=True)
-        
-        #item_rev['processed_reviews'] = item_rev['review'].apply(lambda row: self.process(row))
         self.item_data = item_rev
         self.LDA_matrix = self.LDA(self.item_data, 'review')
-        #self.LDA_matrix = self.LDA(self.item_data, 'processed_reviews')
         self.user_index = self.review_data.set_index('user')['item']
         self.item2index = pd.Index(self.item_data.item.unique(), name='item')
         _logger.info('[%s] fitting LDA model', self.timer)
