@@ -25,7 +25,7 @@ Or you can use pip:
 pip install lenskit
 ## Loading Data and Sampling
 The algorithms need a dataset that has user and item interactions. For this project, Steam game reviews dataset is used. 
-link of dataset: https://cseweb.ucsd.edu/~jmcauley/datasets.html#steam\_data
+link of dataset: https://cseweb.ucsd.edu/~jmcauley/datasets.html#steam_data
 Both "Review Data" and "User and Item Data" of Version 1 are downloaded in the same directory of the notebook.
 
 After loading the dataset, it is cleaned up and reformatted to make it suitable for running the experiment on it.
