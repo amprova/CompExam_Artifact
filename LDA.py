@@ -175,9 +175,7 @@ class ReviewLDAKL:
         
     def __str__(self):
         return 'LDA'
-    print(__doc__)
-    print(fit.__doc__)
-    print(predict_for_user.__doc__)
+    
         
             
          
