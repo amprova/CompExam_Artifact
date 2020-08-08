@@ -28,9 +28,7 @@ Or you can use pip:
 pip install lenskit
 
 ## Loading Data and Sampling
-The algorithms need a dataset that has user and item interactions. For this project, the Steam game reviews dataset is used. 
-dataset link: https://cseweb.ucsd.edu/~jmcauley/datasets.html#steam_data
-Both "Review Data" and "User and Item Data" of Version 1 are downloaded in the /data directory.
+The algorithms need a dataset that has user and item interactions. For this project, the Steam game reviews dataset is used from this link: https://cseweb.ucsd.edu/~jmcauley/datasets.html#steam_data. Both "Review Data" and "User and Item Data" of Version 1 are downloaded in the /data directory.
 
 After loading the dataset, it is cleaned up and reformatted to make it suitable for running the experiment on it. Users who have at least 5 items in their list are selected. Crossfold methods from LensKit are used to split the dataset into train and test sets.
 
