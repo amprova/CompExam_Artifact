@@ -15,6 +15,24 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 class ReviewTFIDF:
     
+    """
+    class ReviewTFIDF(tokenize = True, lower = True, stop_words_removal = True, stemmed = True)
+    
+    ReviewTFIDF is an item-item features similarity calculation algorithm. 
+
+    Item features are generated from user reviews. Term frequency-inverse document frequency (TF-IDF) technique is applied on user reviews for each item to identify its features. Before applying TF-IDF, reviews can be processed (tokenized, lowercased, stopwords removed, stemmed). To find the similarity between item feature sets, cosine similarity is calculated. 
+
+
+    Args:
+        tokenize: bool, (default True) whether to tokenize the user reviews
+             Nltk.tokenize.regexp is used to tokenize the reviews.
+        lower: bool, (default True) whether to lowercase all the tokens of reviews
+        stop_words_removal: bool, (default True) whether to remove the stop words
+             English stopwords from nltk.corpus are used to identify stopwords. 
+        stemmed: bool, (default True) whether to convert the tokens into stemmed form
+             Nltk.stem.PorterStemmer is used to stem the tokens.
+    """
+    
     similarity_matrix = None
     review_data = None
     item_data = None
@@ -89,7 +107,15 @@ class ReviewTFIDF:
         return item_sim
 
     def fit(self, pruned_data):
+        """
+        Train the model using the specified reviews data.
+        Args:
+            reviews(pandas.dataframe): the reviews data
+        Returns:
+            The algorithmic object
+        """
        
+    
         self.timer = util.Stopwatch()
         self.review_data = pruned_data
         only_rev = pruned_data.dropna()
@@ -108,6 +134,18 @@ class ReviewTFIDF:
         return self
     
     def predict_for_user(self, userID, itemList, ratings = None):
+        """
+        Compute prediction for users and items.
+
+        Args:
+            user: the userID
+            items (array-like): the items to predict
+            ratings: None
+        Returns:
+            scores for the items, indexed by item id
+        Return type: pandas.Series
+
+        """
         #user_item_ids = self.review_data.set_index('user')['item']
         if userID in self.user_index.index:
             temp_df = self.get_user_item(userID)
@@ -127,6 +165,7 @@ class ReviewTFIDF:
         
     def __str__(self):
         return 'Tf-IDF'
+    
     
     
         

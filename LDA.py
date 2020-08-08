@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import RegexpTokenizer
@@ -18,6 +17,25 @@ _logger = logging.getLogger(__name__)
 
 
 class ReviewLDAKL:
+    
+    """
+    class ReviewLDAKL(tokenize = True, lower = True, stop_words_removal = True, stemmed = True, NUM_TOPICS=20)
+    
+    ReviewLDA is an item-item similarity calculation algorithm based on topic distribution. 
+    Item features are generated based on topic distribution from user reviews. Latent Dirichlet Allocation (LDA) is used to model topics from reviews. Before applying LDA reviews can be processed (tokenized, lowercased, stopwords removed, stemmed). To find the similarity between item topic distribution, Jensen-Shannon divergence is calculated.
+
+    Args:
+        tokenize: bool, (default True) whether to tokenize the user reviews
+             Nltk.tokenize.regexp is used to tokenize the reviews.
+        lower: bool, (default True) whether to lowercase all the tokens of reviews
+        stop_words_removal: bool, (default True) whether to remove the stop words
+             English stopwords from nltk.corpus are used to identify stopwords. 
+        stemmed: bool, (default True) whether to convert the tokens into stemmed form
+             Nltk.stem.PorterStemmer is used to stem the tokens.
+        NUM_TOPICS: int, (default 20)
+             Number of topics to calculate the topic distribution of items.
+
+    """
     
     similarity_matrix = None
     review_data = None
@@ -108,6 +126,14 @@ class ReviewLDAKL:
 
     def fit(self, pruned_data):
         
+        """
+        Train the model using the specified reviews data.
+        Args:
+            reviews(pandas.dataframe): the reviews data
+        Returns:
+            The algorithmic object
+        """
+        
         self.timer = util.Stopwatch()
         self.review_data = pruned_data
         only_rev = pruned_data.dropna()
@@ -125,6 +151,18 @@ class ReviewLDAKL:
         
     def predict_for_user(self, userID, itemList, ratings = None):
         
+        """
+        Compute prediction for users and items.
+
+        Args:
+            user: the userID
+            items (array-like): the items to predict
+            ratings: None
+        Returns:
+            scores for the items, indexed by item id
+        Return type: pandas.Series
+
+        """
         if userID in self.user_index.index:
             UI_dist = self.user_item_topic_dist(userID)
             final_score = self.sim_score(UI_dist, itemList)
@@ -137,6 +175,9 @@ class ReviewLDAKL:
         
     def __str__(self):
         return 'LDA'
+    print(__doc__)
+    print(fit.__doc__)
+    print(predict_for_user.__doc__)
         
             
          
