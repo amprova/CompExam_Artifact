@@ -83,7 +83,7 @@ class ReviewTFIDF:
         return cosine_mat.toarray()
 
     def get_user_item(self, userID):
-        #user_item_ids = self.review_data.set_index('user')['item']
+        
         item_list = self.user_index.loc[userID]
         if isinstance(item_list, str):
             item_list = pd.Series(item_list).rename("item")
